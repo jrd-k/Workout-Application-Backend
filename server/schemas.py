@@ -1,6 +1,9 @@
 from marshmallow import Schema, fields, validate, ValidationError, validates_schema
 
-from models import ALLOWED_CATEGORIES
+try:
+    from .models import ALLOWED_CATEGORIES
+except ImportError:
+    from models import ALLOWED_CATEGORIES
 
 class WorkoutExerciseSchema(Schema):
     id = fields.Int(dump_only=True)
