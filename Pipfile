@@ -5,14 +5,11 @@ name = "pypi"
 
 [packages]
 flask = "*"
-flask-sqlalchemy = "*"
 flask-migrate = "*"
+flask-sqlalchemy = "*"
 marshmallow = "*"
-marshmallow-sqlalchemy = "*"
 
 [dev-packages]
-pytest = "*"
-pytest-cov = "*"
 
 [requires]
-python_version = "3"
+python_version = "3.9"
