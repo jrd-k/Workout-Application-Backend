@@ -6,6 +6,9 @@ from app import app
 from models import db, Exercise, Workout, WorkoutExercise
 
 with app.app_context():
+    # Create all tables first
+    db.create_all()
+    
     print("Clearing existing data...")
     WorkoutExercise.query.delete()
     Workout.query.delete()
