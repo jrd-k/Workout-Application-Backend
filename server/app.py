@@ -3,20 +3,36 @@ from flask_migrate import Migrate
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
 
-from models import db, Exercise, Workout, WorkoutExercise
-from schemas import (
-    exercise_schema,
-    exercises_schema,
-    workout_schema,
-    workouts_schema,
-    workout_exercise_schema,
-)
+try:
+    from .models import db, Exercise, Workout, WorkoutExercise
+    from .schemas import (
+        exercise_schema,
+        exercises_schema,
+        workout_schema,
+        workouts_schema,
+        workout_exercise_schema,
+    )
+except ImportError:
+    from models import db, Exercise, Workout, WorkoutExercise
+    from schemas import (
+        exercise_schema,
+        exercises_schema,
+        workout_schema,
+        workouts_schema,
+        workout_exercise_schema,
+    )
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+import os
+db_path = os.path.join(os.path.dirname(__file__), "app.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-migrate = Migrate(app, db)
+migrate = Migrate(
+    app,
+    db,
+    directory=os.path.join(os.path.dirname(__file__), "migrations"),
+)
 db.init_app(app)
 
 # ---------- Workouts ----------

@@ -2,10 +2,17 @@
 
 from datetime import date
 
-from app import app
-from models import db, Exercise, Workout, WorkoutExercise
+try:
+    from server.app import app
+    from server.models import db, Exercise, Workout, WorkoutExercise
+except ImportError:
+    from app import app
+    from models import db, Exercise, Workout, WorkoutExercise
 
 with app.app_context():
+    # Create all tables first
+    db.create_all()
+    
     print("Clearing existing data...")
     WorkoutExercise.query.delete()
     Workout.query.delete()
